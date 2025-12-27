@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XREZZKY STORE | Digital Game Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-dark: #1a1a1a;
+            --accent-blue: #0056b3;
+            --text-gray: #444;
+            --bg-light: #f4f7f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--primary-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Header & Logo --- */
+        .header {
+            background: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .header img {
+            max-width: 280px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        /* --- Main Content --- */
+        .container {
+            max-width: 800px;
+            margin: -30px auto 50px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .hero-text {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            border-bottom: 3px solid var(--accent-blue);
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 25px;
+        }
+
+        /* --- Lists --- */
+        .grid-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .info-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--accent-blue);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        ul li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        ul li::before {
+            content: "✓";
+            color: var(--accent-blue);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* --- Social Media Section --- */
+        .contact-section {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .btn-contact {
+            display: inline-block;
+            padding: 15px 35px;
+            background: var(--primary-dark);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            transition: 0.3s;
+        }
+
+        .btn-contact:hover {
+            background: var(--accent-blue);
+            transform: translateY(-3px);
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .social-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            text-decoration: none;
+            color: var(--primary-dark);
+            font-weight: 600;
+            transition: 0.3s;
+            border: 1px solid #eee;
+        }
+
+        .social-card i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Colors for brands */
+        .whatsapp:hover { color: #25D366; border-color: #25D366; }
+        .instagram:hover { color: #E1306C; border-color: #E1306C; }
+        .tiktok:hover { color: #000000; border-color: #000000; }
+        .discord:hover { color: #5865F2; border-color: #5865F2; }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .grid-info { grid-template-columns: 1fr; }
+            .header img { max-width: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="https://i.ibb.co.com/XfS0f9y/233799.jpg" alt="XREZZKY STORE LOGO">
+        <h1>XREZZKY STORE</h1>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="hero-text">
+                <p class="description">
+                    XREZZKY STORE menyediakan layanan digital game dengan sistem kerja yang terstruktur dan terkontrol. 
+                    Fokus utama kami adalah kejelasan proses, konsistensi layanan, dan keamanan transaksi.
+                </p>
+            </div>
+
+            <div class="grid-info">
+                <div class="info-box">
+                    <h3>Layanan Kami</h3>
+                    <ul>
+                        <li>Komunitas JB</li>
+                        <li>Joki & Gift</li>
+                        <li>Top Up Game</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h3>Prinsip Kerja</h3>
+                    <ul>
+                        <li>Proses jelas dan rapi</li>
+                        <li>Sistem transaksi terkontrol</li>
+                        <li>Kepercayaan jangka panjang</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p style="margin-top: 30px; font-style: italic; color: #666; text-align: center;">
+                "XREZZKY STORE beroperasi sebagai layanan digital game dengan pendekatan profesional di berbagai platform."
+            </p>
+        </div>
+
+        <div class="contact-section">
+            <a href="#social" class="btn-contact">Pencet untuk menghubungi kami</a>
+            
+            <h2 id="social">Media Sosial Kami</h2>
+            <div class="social-grid">
+                <a href="https://wa.me/6288293064112" class="social-card whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+
+                <a href="https://www.instagram.com/xrezzkystore?igsh=MW81a2F0YzgyeTVxcg==" class="social-card instagram" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+
+                <a href="https://www.tiktok.com/@xrezzkystore0?_r=1&_t=ZS-92ZofsmUq73" class="social-card tiktok" target="_blank">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok</span>
+                </a>
+
+                <a href="https://discord.gg/6Q534tr6EW" class="social-card discord" target="_blank">
+                    <i class="fab fa-discord"></i>
+                    <span>Discord</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 XREZZKY STORE. All Rights Reserved.
+    </footer>
+
+</body>
+</html>
