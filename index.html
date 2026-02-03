@@ -1,257 +1,1348 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XREZZKY STORE | Digital Game Services</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary-dark: #1a1a1a;
-            --accent-blue: #0056b3;
-            --text-gray: #444;
-            --bg-light: #f4f7f6;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>XREZZKYSTORE RNG GIVEAWAY</title>
+<style>
+body{
+ margin:0;
+ background:radial-gradient(circle,#1f6f6f,#020b0b);
+ font-family:Arial,Helvetica,sans-serif;
+ color:#fff;
+ display:flex;
+ justify-content:center;
+}
+.box{
+ width:360px;
+ margin:30px auto;
+ background:#071414;
+ border-radius:18px;
+ padding:20px;
+ box-shadow:0 0 25px #00ffd5;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+}
+h2{
+ text-align:center;
+ color:#00ffd5;
+ margin:5px 0;
+ cursor:pointer;
+}
+input,button,select,textarea{
+ width:100%;
+ margin-top:10px;
+ padding:10px;
+ border-radius:8px;
+ border:none;
+ box-sizing:border-box;
+ font-size:14px;
+}
+button{
+ background:#00ffd5;
+ font-weight:bold;
+ cursor:pointer;
+}
+#redeemBtn{
+ width:100px;
+ font-size:14px;
+ padding:10px;
+ border-radius:8px;
+ margin-left:10px;
+}
+#wheelBox{
+ position:relative;
+ width:280px;
+ height:280px;
+ margin:20px auto;
+}
+#wheel{
+ width:100%;
+ height:100%;
+ border-radius:50%;
+ border:8px solid #00ffd5;
+ transition: transform 4s cubic-bezier(.25,.1,.25,1);
+}
+#arrow{
+ position:absolute;
+ bottom:-28px;
+ left:50%;
+ transform:translateX(-50%);
+ font-size:24px;
+ color:#fff;
+ text-shadow:0 0 8px #00ffd5;
+ z-index:10;
+}
+#eventIndicator{
+ margin-top:6px;
+ font-size:13px;
+ font-weight:bold;
+ padding:6px 10px;
+ border-radius:8px;
+ text-align:center;
+}
+#eventScheduleInfo{
+ margin-top:6px;
+ font-size:12px;
+ color:#00ffd5;
+ text-align:center;
+}
+#eventTimer{
+ margin-top:4px;
+ font-size:13px;
+ color:#ffcc66;
+ text-align:center;
+}
+#result{
+ margin-top:15px;
+ font-size:16px;
+ font-weight:bold;
+ text-align:center;
+}
+.log{
+ background:#000;
+ padding:10px;
+ height:120px;
+ overflow:auto;
+ font-size:12px;
+ margin-top:20px;
+ width:100%;
+ border-radius:8px;
+}
+#globalWinners, #infoBoard{
+ background:#020b0b;
+ padding:10px;
+ overflow:auto;
+ font-size:12px;
+ margin-top:10px;
+ width:100%;
+ border-radius:8px;
+ border:1px solid #00ffd5;
+ max-height:120px;
+}
+#exportStatus{
+ margin-top:6px;
+ font-size:12px;
+ color:#00ffd5;
+ text-align:center;
+}
+#winnersStatus{
+ margin-top:6px;
+ font-size:13px;
+ color:#ffcc00;
+ text-align:center;
+}
+small{
+ color:#aaa;
+ margin-top:8px;
+ display:block;
+ text-align:center;
+}
+#claimBtn{
+ background:#25D366;
+ color:#000;
+ margin-top:10px;
+ display:none;
+ width:100%;
+}
+#adminPanel{
+ display:none;
+ background:#020b0b;
+ padding:10px;
+ border-radius:10px;
+ margin-top:15px;
+ border:1px solid #00ffd5;
+ width:100%;
+}
+#adminPanel button, #adminPanel textarea, #adminPanel input{
+ margin-top:5px;
+}
+.code-wrapper{
+ display:flex;
+ width:100%;
+ align-items:center;
+}
+.code-wrapper input{
+ flex:1;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* Additional small styles for admin manager UI */
+#wheelManager{ margin-top:10px; border-top:1px solid #00ffd5; padding-top:10px; }
+.wheel-item{ display:flex; gap:6px; align-items:center; margin-bottom:6px; }
+.wheel-item input{ padding:6px; font-size:13px; }
+.wheel-item .label-input{ flex:1; }
+.wheel-item select{ width:100px; }
+.wheel-item .weight-input{ width:60px; padding:6px; text-align:center; }
+.wheel-item button{ width:60px; padding:6px; font-size:12px; }
+#eventControls{ display:flex; gap:6px; align-items:center; margin-top:8px; flex-wrap:wrap; }
+#eventStatus{ font-weight:bold; color:#00ffd5; margin-left:6px; }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--primary-dark);
-            line-height: 1.6;
-            scroll-behavior: smooth;
-        }
+/* Export modal */
+#exportModal{
+ display:none;
+ position:fixed;
+ left:0;
+ top:0;
+ width:100%;
+ height:100%;
+ background:rgba(0,0,0,0.6);
+ z-index:9999;
+ align-items:center;
+ justify-content:center;
+}
+#exportContent{
+ width:320px;
+ background:#071414;
+ border:1px solid #00ffd5;
+ padding:12px;
+ border-radius:10px;
+ color:#fff;
+}
+#exportContent textarea{
+ height:180px;
+ background:#000;
+ color:#fff;
+ padding:8px;
+ font-size:13px;
+ border-radius:6px;
+}
+#exportButtons{ display:flex; gap:8px; margin-top:8px; }
+#exportButtons button{ flex:1; }
 
-        /* --- Header & Logo --- */
-        .header {
-            background: white;
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
+/* admin small grid */
+.admin-row{ display:flex; gap:6px; }
+.admin-row > *{ flex:1; }
+.mode-flag{ display:flex; align-items:center; gap:6px; margin-top:6px; color:#00ffd5; font-weight:bold; }
+.mode-flag input{ width:auto; }
+.small-btn{ padding:8px; font-size:13px; border-radius:6px; }
 
-        .header img {
-            max-width: 280px;
-            height: auto;
-            margin-bottom: 10px;
-        }
+/* public panel */
+#publicPanel{ display:none; width:100%; margin-top:12px; background:rgba(0,0,0,0.06); border-radius:8px; padding:10px; box-sizing:border-box; text-align:center; }
+#publicPanel .pub-row{ margin-bottom:6px; }
+#publicWinnersList{ text-align:left; max-height:120px; overflow:auto; padding:6px; background:rgba(0,0,0,0.03); border-radius:6px; }
 
-        /* --- Main Content --- */
-        .container {
-            max-width: 800px;
-            margin: -30px auto 50px;
-            padding: 0 20px;
-        }
+ /* small improvement for spin button placed below wheel */
+#spinBtn{
+ margin-top:12px;
+ max-width:220px;
+ width:100%;
+ align-self:center;
+}
 
-        .card {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
-        }
+/* NEW: timer status color classes (do not change existing colors/layout) */
+.event-timer-status.green{ background:#16a34a; color:#000; padding:6px 10px; border-radius:8px; display:inline-block; font-weight:bold; }
+.event-timer-status.yellow{ background:#f59e0b; color:#000; padding:6px 10px; border-radius:8px; display:inline-block; font-weight:bold; }
+.event-timer-status.red{ background:#ef4444; color:#fff; padding:6px 10px; border-radius:8px; display:inline-block; font-weight:bold; }
+.event-timer-status.gray{ background:#334155; color:#fff; padding:6px 10px; border-radius:8px; display:inline-block; font-weight:bold; }
 
-        .hero-text {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+/* Modal for winner details */
+#winnerModal{
+ display:none;
+ position:fixed;
+ left:0; top:0; width:100%; height:100%;
+ background:rgba(0,0,0,0.6);
+ z-index:10000;
+ align-items:center; justify-content:center;
+}
+#winnerContent{
+ width:320px; background:#071414; border:1px solid #00ffd5; padding:12px; border-radius:8px; color:#fff;
+}
+.winner-row{ margin:6px 0; padding:6px; background:rgba(255,255,255,0.02); border-radius:6px; }
 
-        h2 {
-            color: var(--primary-dark);
-            border-bottom: 3px solid var(--accent-blue);
-            display: inline-block;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
+/* Admin lock overlay */
+#adminLockOverlay{
+ position:absolute; left:0; top:0; right:0; bottom:0; background:rgba(0,0,0,0.6); display:none; z-index:999; border-radius:10px;
+}
 
-        .description {
-            font-size: 1.1rem;
-            color: var(--text-gray);
-            margin-bottom: 25px;
-        }
+/* =========================
+   USER REQUEST: hide (don't delete) elements "di bawah tombol spin"
+   We MUST NOT remove original code. To satisfy "hapus" in UI, we hide elements via CSS.
+   ========================= */
+#result, #claimBtn, #spinInfo, .log, #infoBoard, #globalWinners, #winnersStatus, #exportModal, #winnerModal {
+  display: none !important;
+}
 
-        /* --- Lists --- */
-        .grid-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-top: 20px;
-        }
-
-        .info-box h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: var(--accent-blue);
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        ul li {
-            padding: 5px 0;
-            display: flex;
-            align-items: center;
-        }
-
-        ul li::before {
-            content: "✓";
-            color: var(--accent-blue);
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        /* --- Social Media Section --- */
-        .contact-section {
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .btn-contact {
-            display: inline-block;
-            padding: 15px 35px;
-            background: var(--primary-dark);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            margin-bottom: 40px;
-            transition: 0.3s;
-        }
-
-        .btn-contact:hover {
-            background: var(--accent-blue);
-            transform: translateY(-3px);
-        }
-
-        .social-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
-
-        .social-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            background: white;
-            border-radius: 15px;
-            text-decoration: none;
-            color: var(--primary-dark);
-            font-weight: 600;
-            transition: 0.3s;
-            border: 1px solid #eee;
-        }
-
-        .social-card i {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-
-        /* Colors for brands */
-        .whatsapp:hover { color: #25D366; border-color: #25D366; }
-        .instagram:hover { color: #E1306C; border-color: #E1306C; }
-        .tiktok:hover { color: #000000; border-color: #000000; }
-        .discord:hover { color: #5865F2; border-color: #5865F2; }
-
-        .social-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            .grid-info { grid-template-columns: 1fr; }
-            .header img { max-width: 200px; }
-        }
-    </style>
+/* Keep eventIndicator, eventScheduleInfo and eventTimer visible above the wheel per user request */
+</style>
 </head>
 <body>
+<div class="box">
+<h2 id="title">XREZZKYSTORE</h2>
+<p style="text-align:center;font-size:12px">RNG GIVEAWAY SYSTEM</p>
 
-    <div class="header">
-        <img src="https://i.ibb.co.com/XfS0f9y/233799.jpg" alt="XREZZKY STORE LOGO">
-        <h1>XREZZKY STORE</h1>
+<input id="name" placeholder="Nama (1x saja)">
+
+<div class="code-wrapper">
+ <input id="code" placeholder="Kode tambahan spin (opsional)">
+ <button id="redeemBtn">Redeem</button>
+</div>
+
+<!-- tombol SPIN dipindahkan ke bawah wheel (sesuai permintaan) -->
+
+<!-- EVENT STATUS & WAKTU (DI ATAS WHEEL) - wajib tersambung ke Firebase -->
+<div id="eventIndicator" aria-live="polite">EVENT: LOADING...</div>
+<div id="eventScheduleInfo"></div>
+<div id="eventTimer"></div>
+
+<div id="wheelBox">
+ <canvas id="wheel" width="280" height="280"></canvas>
+ <div id="arrow">⬆️</div>
+</div>
+
+<!-- SPIN button now berada di bawah wheel -->
+<button id="spinBtn">🌀 SPIN RNG</button>
+
+<!-- The following UI elements are intentionally hidden via CSS (not deleted) to comply with the user's "hapus" request
+     — all original code remains below and still connected to Firebase/logic (per strict instruction). -->
+<div id="result"></div>
+<button id="claimBtn">📩 KLAIM HADIAH</button>
+
+<small id="spinInfo"></small>
+<div class="log" id="log"></div>
+<div id="infoBoard"><b>INFO EVENT:</b><br>Loading...</div>
+<div id="globalWinners"><b>Pemenang:</b><br>Loading...</div>
+<div id="winnersStatus"></div>
+
+<!-- Public panel (appears on ?public=1 or when publicUrl matches) -->
+<div id="publicPanel" aria-hidden="true">
+  <div class="pub-row" id="publicStatus"><b>Status:</b> Loading...</div>
+  <div class="pub-row" id="publicSchedule">Waktu event: -</div>
+  <div class="pub-row" id="publicLastWinner">Pemenang terakhir: -</div>
+  <div id="publicWinnersList">Belum ada pemenang</div>
+  <div style="margin-top:8px;">
+    <button id="publicSpinBtn" style="min-width:120px">🌀 SPIN (Publik)</button>
+  </div>
+</div>
+
+<div id="adminPanel">
+ <b>🔒 ADMIN PANEL</b>
+
+ <div style="margin-top:6px;"><small style="color:#aaa">Mode:</small></div>
+ <div class="mode-flag">
+   <label><input type="radio" name="mode" id="modeTesting" value="testing"> Testing</label>
+   <label><input type="radio" name="mode" id="modeRequired" value="required"> Wajib Isi</label>
+ </div>
+
+ <textarea id="adminInfo" placeholder="Tulis info event disini..."></textarea>
+ <button id="updateInfoBtn">💾 Update Info Event</button>
+
+ <div class="admin-row">
+   <input id="maxWinnerGlobal" placeholder="Max Pemenang Global">
+   <input id="maxWinDevice" placeholder="Max Hadiah Per Device">
+ </div>
+ <div class="admin-row">
+   <input id="maxSpinDevice" placeholder="Max Spin Per Device">
+   <input id="freeSpinNewUser" placeholder="Free Spin untuk User Baru (angka)">
+ </div>
+
+ <div style="display:flex;gap:6px;">
+   <button id="applySettingsBtn" class="small-btn">🔁 Terapkan Settings</button>
+   <button id="toggleEventBtn" class="small-btn">TURN OFF</button>
+   <!-- Keberadaan eventOnBtn/eventOffBtn dipertahankan di DOM (tidak dihapus), tapi UI dirancang agar hanya 1 toggle utama dipakai -->
+   <button id="eventOnBtn" class="small-btn" style="background:#22c55e;color:#000">EVENT ON</button>
+   <button id="eventOffBtn" class="small-btn" style="background:#ef4444;color:#fff">EVENT OFF</button>
+ </div>
+
+ <div style="margin-top:8px;">
+   <button id="resetAllDataBtn" style="background:#ff4444;color:#fff">⚠️ RESET SEMUA DATA</button>
+   <small style="color:#aaa">Hapus semua spin & pemenang (kode redeem tetap ada). Akan meminta konfirmasi.</small>
+ </div>
+
+ <div style="margin-top:10px;">
+   <button id="resetSpinBtn">♻ Reset Spin Semua User (local)</button>
+   <button id="restartWinnersBtn">🔄 Reset Pemenang (firebase)</button>
+ </div>
+
+ <div style="margin-top:10px;">
+   <input id="newCode" placeholder="Kode Baru">
+   <input id="newCodeSpin" placeholder="Spin tambahan">
+   <button id="addCodeBtn">➕ Tambah Code</button>
+   <button id="resetCodesBtn">🧹 Reset SEMUA CODE (firebase)</button>
+ </div>
+
+ <div style="margin-top:10px;border-top:1px solid #00ffd5;padding-top:10px;">
+   <b>🎡 Wheel Manager</b>
+   <div id="wheelList">Loading...</div>
+   <input id="newWheelLabel" placeholder="Nama hadiah baru">
+   <select id="newWheelType"><option value="win">HADIAH</option><option value="lose">ZONK</option></select>
+   <input id="newWheelWeight" placeholder="Weight" value="1">
+   <button id="addWheelItemBtn">➕ Tambah Item Wheel</button>
+ </div>
+
+ <div style="margin-top:10px;border-top:1px solid #00ffd5;padding-top:10px;">
+   <b>⏱ Schedule (opsional)</b>
+   <div style="font-size:12px;color:#aaa">Jika aktif, event akan otomatis ON/OFF sesuai jadwal. Wajib diisi jika Mode Wajib aktif.</div>
+   <input id="eventStart" type="datetime-local" placeholder="Tanggal & Jam Mulai">
+   <input id="eventEnd" type="datetime-local" placeholder="Tanggal & Jam Berakhir">
+   <label style="margin-top:6px;"><input id="enableSchedule" type="checkbox"> Aktifkan Schedule (Auto ON/OFF)</label>
+   <div style="display:flex;gap:6px;margin-top:6px;">
+     <button id="setScheduleBtn">💾 Set Schedule</button>
+     <button id="clearScheduleBtn">🗑 Hapus Schedule</button>
+   </div>
+ </div>
+
+ <div style="margin-top:10px;border-top:1px solid #00ffd5;padding-top:10px;">
+   <b>🔗 Public Page</b>
+   <input id="publicUrl" placeholder="Public Page URL (kosong = default)">
+   <div style="display:flex;gap:6px;margin-top:6px;">
+     <button id="setPublicUrlBtn">💾 Set Public URL</button>
+     <button id="openPublicBtn">🌐 Buka Halaman Publik</button>
+     <button id="copyPublicBtn">📋 Salin Link</button>
+   </div>
+ </div>
+
+ <div style="margin-top:10px;border-top:1px solid #00ffd5;padding-top:10px;">
+   <b>📤 Export</b>
+   <button id="exportBtn">EXPORT PEMENANG</button>
+   <div id="exportStatus"></div>
+ </div>
+
+ <div style="margin-top:10px;">
+   <button id="resetBtn">❌ Hapus Semua (User & Pemenang)</button>
+ </div>
+
+</div>
+
+<!-- EXPORT MODAL (keberadaan di DOM dipertahankan, tapi disembunyikan via CSS per user request) -->
+<div id="exportModal">
+ <div id="exportContent">
+   <div style="font-weight:bold;margin-bottom:6px">EXPORT PEMENANG</div>
+   <textarea id="exportArea" readonly></textarea>
+   <div id="exportButtons">
+     <button id="copyExportBtn">Copy Semua</button>
+     <button id="closeExportBtn">Tutup</button>
+   </div>
+ </div>
+</div>
+
+<!-- WINNER DETAIL MODAL (keberadaan di DOM dipertahankan, tapi disembunyikan via CSS per user request) -->
+<div id="winnerModal">
+  <div id="winnerContent">
+    <div style="font-weight:bold;margin-bottom:8px">Detail Pemenang</div>
+    <div id="winnerList"></div>
+    <div style="display:flex;gap:8px;margin-top:8px;">
+      <button id="closeWinnerModal">Tutup</button>
     </div>
+  </div>
+</div>
 
-    <div class="container">
-        <div class="card">
-            <div class="hero-text">
-                <p class="description">
-                    XREZZKY STORE menyediakan layanan digital game dengan sistem kerja yang terstruktur dan terkontrol. 
-                    Fokus utama kami adalah kejelasan proses, konsistensi layanan, dan keamanan transaksi.
-                </p>
-            </div>
+<script>
+/* IMPORTANT: Keep firebaseConfig exactly as provided by user (must remain connected).
+   The object below is present exactly as requested and used to initialize Firebase.
+*/
+const firebaseConfig = {
+  apiKey: "AIzaSyD85JE0QCaey1o4AUQtp24aGqNmx3AtbmA",
+  authDomain: "xrezzkystore-rng.firebaseapp.com",
+  databaseURL: "https://xrezzkystore-rng-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "xrezzkystore-rng",
+  storageBucket: "xrezzkystore-rng.appspot.com",
+  messagingSenderId: "304889774590",
+  appId: "1:304889774590:web:5d52c2485ca2137ad480af",
+  measurementId: "G-MQ71QRYHV7"
+};
+</script>
 
-            <div class="grid-info">
-                <div class="info-box">
-                    <h3>Layanan Kami</h3>
-                    <ul>
-                        <li>Komunitas JB</li>
-                        <li>Joki & Gift</li>
-                        <li>Top Up Game</li>
-                    </ul>
-                </div>
-                <div class="info-box">
-                    <h3>Prinsip Kerja</h3>
-                    <ul>
-                        <li>Proses jelas dan rapi</li>
-                        <li>Sistem transaksi terkontrol</li>
-                        <li>Kepercayaan jangka panjang</li>
-                    </ul>
-                </div>
-            </div>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+// ================= CONFIG & STATE =================
+const ADMIN_PIN="XREZZKY STORE0930";
+const ADMIN_WA="6288293064112";
+let MAX_SPIN_PER_USER = 0;
+let MAX_WIN_PER_DEVICE = 2;
+let MAX_WINNER_GLOBAL = 10;
+const DEFAULT_FREE_SPIN_NEW_USER = 5;
 
-            <p style="margin-top: 30px; font-style: italic; color: #666; text-align: center;">
-                "XREZZKY STORE beroperasi sebagai layanan digital game dengan pendekatan profesional di berbagai platform."
-            </p>
-        </div>
+let prizes=[
+ {label:"ZONK",win:false, weight:1},
+ {label:"CLASS(1)",win:true, weight:1},
+ {label:"ZONK",win:false, weight:1},
+ {label:"TRAIN(1)",win:true, weight:1},
+ {label:"ZONK",win:false, weight:1},
+ {label:"TRAIN(1)+CLASS(1)",win:true, weight:1}
+];
+let CODES={};
+let EVENT_ON = true;
+let REQUIRE_PARAMS = false; // mode required/wajib
+let SCHEDULE_ENABLED = false;
+let SCHEDULE_START = 0; // epoch ms
+let SCHEDULE_END = 0;
+let PUBLIC_URL = "";
 
-        <div class="contact-section">
-            <a href="#social" class="btn-contact">Pencet untuk menghubungi kami</a>
-            
-            <h2 id="social">Media Sosial Kami</h2>
-            <div class="social-grid">
-                <a href="https://wa.me/6288293064112" class="social-card whatsapp" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>WhatsApp</span>
-                </a>
+/* Initialize Firebase using firebaseConfig (kept as requested above) */
+firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
 
-                <a href="https://www.instagram.com/xrezzkystore?igsh=MW81a2F0YzgyeTVxcg==" class="social-card instagram" target="_blank">
-                    <i class="fab fa-instagram"></i>
-                    <span>Instagram</span>
-                </a>
+// ================= STORAGE & DEVICE =================
+const deviceId=localStorage.getItem("devId") || (()=>{ const id="dev-"+Math.random().toString(36).slice(2); localStorage.setItem("devId",id); return id; })();
+let spinData=JSON.parse(localStorage.getItem("spinData")||"{}");
+let usedCodes=JSON.parse(localStorage.getItem("usedCodes")||"{}");
+let lockedName=localStorage.getItem("lockedName");
+let hasWon=localStorage.getItem("hasWon")==="true";
+let totalSpin=JSON.parse(localStorage.getItem("totalSpin")||"0");
+let lastPrize=null;
+let lastResetAll = parseInt(localStorage.getItem("lastResetAll")||"0",10) || 0;
+if(!spinData[deviceId]) spinData[deviceId]=0;
 
-                <a href="https://www.tiktok.com/@xrezzkystore0?_r=1&_t=ZS-92ZofsmUq73" class="social-card tiktok" target="_blank">
-                    <i class="fab fa-tiktok"></i>
-                    <span>TikTok</span>
-                </a>
+// ================= SYNC SETTINGS FROM FIREBASE =================
+const settingsRef = db.ref("settings");
+settingsRef.on("value", snap => {
+  const s = snap.val() || {};
 
-                <a href="https://discord.gg/6Q534tr6EW" class="social-card discord" target="_blank">
-                    <i class="fab fa-discord"></i>
-                    <span>Discord</span>
-                </a>
-            </div>
-        </div>
-    </div>
+  if(typeof s.eventOn !== "undefined") EVENT_ON = s.eventOn === true;
+  // We keep eventStatus DOM usage intact but move indicator above wheel per CSS/HTML position
+  try{ document.getElementById("eventStatus").innerText = EVENT_ON ? "ON" : "OFF"; }catch(e){}
+  try{ document.getElementById("toggleEventBtn").innerText = EVENT_ON ? "TURN OFF" : "TURN ON"; }catch(e){}
 
-    <footer>
-        &copy; 2024 XREZZKY STORE. All Rights Reserved.
-    </footer>
+  // Update the public indicator immediately
+  const ind = document.getElementById("eventIndicator");
+  if(ind){
+    if(EVENT_ON){
+      ind.innerText = "EVENT: ON";
+      ind.style.background = "#16a34a";
+      ind.style.color = "#000";
+    } else {
+      ind.innerText = "EVENT: OFF";
+      ind.style.background = "#ef4444";
+      ind.style.color = "#fff";
+    }
+  }
 
+  REQUIRE_PARAMS = !!s.requireParams;
+  try{ document.getElementById("modeRequired").checked = REQUIRE_PARAMS; }catch(e){}
+  try{ document.getElementById("modeTesting").checked = !REQUIRE_PARAMS; }catch(e){}
+
+  if(typeof s.maxWinnerGlobal !== "undefined"){
+    MAX_WINNER_GLOBAL = parseInt(s.maxWinnerGlobal) || 0;
+    document.getElementById("maxWinnerGlobal").value = MAX_WINNER_GLOBAL;
+  }
+  if(typeof s.maxWinPerDevice !== "undefined"){
+    MAX_WIN_PER_DEVICE = parseInt(s.maxWinPerDevice) || 0;
+    document.getElementById("maxWinDevice").value = MAX_WIN_PER_DEVICE;
+  }
+  if(typeof s.maxSpinPerUser !== "undefined"){
+    MAX_SPIN_PER_USER = parseInt(s.maxSpinPerUser) || 0;
+    document.getElementById("maxSpinDevice").value = MAX_SPIN_PER_USER;
+  }
+  if(typeof s.freeSpinNewUser !== "undefined"){
+    document.getElementById("freeSpinNewUser").value = String(s.freeSpinNewUser);
+  } else {
+    document.getElementById("freeSpinNewUser").value = "";
+  }
+
+  // public URL
+  PUBLIC_URL = s.publicUrl || "";
+  try{ document.getElementById("publicUrl").value = PUBLIC_URL; }catch(e){}
+
+  // schedule
+  SCHEDULE_ENABLED = !!s.scheduleEnabled;
+  SCHEDULE_START = Number(s.eventStart) || 0;
+  SCHEDULE_END = Number(s.eventEnd) || 0;
+  try{ document.getElementById("enableSchedule").checked = SCHEDULE_ENABLED; }catch(e){}
+  // display schedule inputs if present
+  if(SCHEDULE_START) try{ document.getElementById("eventStart").value = (new Date(SCHEDULE_START)).toISOString().slice(0,16); }catch(e){ }
+  else try{ document.getElementById("eventStart").value = ""; }catch(e){}
+  if(SCHEDULE_END) try{ document.getElementById("eventEnd").value = (new Date(SCHEDULE_END)).toISOString().slice(0,16); }catch(e){}
+  else try{ document.getElementById("eventEnd").value = ""; }catch(e){}
+
+  // if schedule enabled, ensure eventOn follows schedule
+  if(SCHEDULE_ENABLED && SCHEDULE_START && SCHEDULE_END){
+    evaluateScheduleAndToggle();
+  }
+
+  // resetAllTimestamp handling - if newer than local, clear local spin counters for this device
+  if(typeof s.resetAllTimestamp !== "undefined"){
+    const t = Number(s.resetAllTimestamp) || 0;
+    if(t > lastResetAll){
+      spinData[deviceId] = 0;
+      hasWon = false;
+      localStorage.setItem("hasWon","false");
+      localStorage.setItem("spinData",JSON.stringify(spinData));
+      localStorage.setItem("lastResetAll",String(t));
+      lastResetAll = t;
+      updateInfo();
+
+      // Juga bersihkan tampilan jadwal / waktu global (atas dan panel publik)
+      try{
+        const esi = document.getElementById("eventScheduleInfo");
+        const et = document.getElementById("eventTimer");
+        if(esi) esi.innerText = "";
+        if(et) et.innerText = "";
+        const pubSch = document.getElementById("publicSchedule");
+        if(pubSch) pubSch.innerText = "";
+      }catch(e){}
+    }
+  }
+});
+
+// CODES sync
+db.ref("codes").on("value", snapshot=>{
+ CODES = snapshot.val() || {};
+});
+
+// WHEEL ITEMS sync
+const wheelItemsRef = db.ref("wheelItems");
+wheelItemsRef.once("value").then(snap=>{
+  if(!snap.exists()){
+    const initial = prizes.map(p=>({label:p.label, win: !!p.win, weight: Number(p.weight)||1}));
+    db.ref("wheelItems").set(initial);
+  }
+});
+wheelItemsRef.on("value", snap=>{
+  const items = snap.val();
+  if(!items || !Array.isArray(items) || items.length === 0){
+    const initial = prizes.map(p=>({label:p.label, win: !!p.win, weight: Number(p.weight)||1}));
+    db.ref("wheelItems").set(initial);
+    return;
+  }
+  prizes = [];
+  for(let i=0;i<items.length;i++){
+    const it = items[i] || {};
+    prizes.push({ label: it.label || "ZONK", win: !!it.win, weight: (typeof it.weight !== "undefined") ? Number(it.weight) : 1 });
+  }
+  // safety
+  const hasWin = prizes.some(p=>p.win);
+  const hasLose = prizes.some(p=>!p.win);
+  if(!hasWin || !hasLose){
+    if(!hasLose) prizes[0].win = false;
+    if(!hasWin){
+      if(prizes.length < 2) prizes.push({label:"CLASS(1)", win:true, weight:1});
+      else prizes[1].win = true;
+    }
+    const corrected = prizes.map(p=>({label:p.label, win:p.win, weight: Number(p.weight) || 1}));
+    db.ref("wheelItems").set(corrected);
+    return;
+  }
+  drawWheel();
+  renderWheelListUI(items);
+});
+
+// ================= DRAW WHEEL =================
+const canvas=document.getElementById("wheel");
+const ctx=canvas.getContext("2d");
+const c=140;
+function drawWheel(){
+ const slice=2*Math.PI/prizes.length;
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ for(let i=0;i<prizes.length;i++){
+   ctx.beginPath();
+   ctx.moveTo(c,c);
+   ctx.fillStyle=`hsl(${Math.random()*360},80%,55%)`;
+   ctx.arc(c,c,140,i*slice,(i+1)*slice);
+   ctx.fill();
+   ctx.save();
+   ctx.translate(c,c);
+   ctx.rotate(i*slice+slice/2);
+   ctx.fillStyle="#000";
+
+   const text = prizes[i].label || "";
+   const baseFontSize = 12;
+   const minFontSize = 8;
+   const textRadius = 50;
+   const availableArcLen = slice * textRadius;
+   const maxTextWidth = Math.max(40, Math.min(120, availableArcLen * 0.9));
+
+   let fontSize = baseFontSize;
+   ctx.font = `bold ${fontSize}px Arial`;
+   while(ctx.measureText(text).width > maxTextWidth && fontSize > minFontSize){
+     fontSize--;
+     ctx.font = `bold ${fontSize}px Arial`;
+   }
+
+   ctx.fillText(text,50,5);
+   ctx.restore();
+ }
+}
+drawWheel();
+
+// ================= UTIL =================
+function updateInfo(){
+ document.getElementById("spinInfo").innerText =
+  (spinData[deviceId]||0) > 0 ?
+  `🎟 Spin tersisa: ${spinData[deviceId]}` :
+  `⚠️ Spin habis!`;
+}
+function saveData(){
+ localStorage.setItem("spinData",JSON.stringify(spinData));
+ localStorage.setItem("usedCodes",JSON.stringify(usedCodes));
+ localStorage.setItem("hasWon",hasWon?"true":"false");
+ localStorage.setItem("lockedName",lockedName||"");
+ localStorage.setItem("totalSpin",totalSpin);
+}
+
+// weighted pick
+function weightedPickIndex(indices){
+  if(!Array.isArray(indices) || indices.length===0) return null;
+  let total = 0;
+  const weights = indices.map(i => {
+    const w = Number(prizes[i].weight) || 0;
+    const ww = w < 0 ? 0 : w;
+    total += ww;
+    return ww;
+  });
+  if(total <= 0) return indices[Math.floor(Math.random()*indices.length)];
+  let r = Math.random()*total;
+  for(let k=0;k<indices.length;k++){
+    r -= weights[k];
+    if(r <= 0) return indices[k];
+  }
+  return indices[indices.length-1];
+}
+
+// check required params before enabling event
+function canEnableEvent(){
+  if(!REQUIRE_PARAMS) return true;
+  const info = (document.getElementById("adminInfo").value || "").trim();
+  const mwg = parseInt(document.getElementById("maxWinnerGlobal").value) || 0;
+  const mwd = parseInt(document.getElementById("maxWinDevice").value) || 0;
+  const msp = parseInt(document.getElementById("maxSpinDevice").value) || 0;
+  if(!info || mwg<=0 || mwd<=0 || msp<=0){
+    return false;
+  }
+  return true;
+}
+
+// ================= SCHEDULE LOGIC =================
+let scheduleTimerInterval = null;
+function evaluateScheduleAndToggle(){
+  // Only act if schedule enabled and start/end set
+  if(!SCHEDULE_ENABLED || !SCHEDULE_START || !SCHEDULE_END) return;
+  const now = Date.now();
+  const shouldBeOn = (now >= SCHEDULE_START && now <= SCHEDULE_END);
+  // if REQUIRE_PARAMS and attempting to enable, validate
+  if(shouldBeOn && REQUIRE_PARAMS && !canEnableEvent()){
+    // cannot enable due to missing params - keep OFF and show warning in timer area
+    try{ document.getElementById("eventTimer").innerText = "Event dijadwalkan tetapi parameter wajib belum diisi."; }catch(e){}
+    db.ref("settings/eventOn").set(false);
+    return;
+  }
+  db.ref("settings/eventOn").set(shouldBeOn);
+}
+
+// countdown display
+function startScheduleDisplay(){
+  if(scheduleTimerInterval) clearInterval(scheduleTimerInterval);
+  scheduleTimerInterval = setInterval(()=>{
+    if(!SCHEDULE_START && !SCHEDULE_END){
+      try{ document.getElementById("eventScheduleInfo").innerText = ""; document.getElementById("eventTimer").innerText = ""; }catch(e){}
+      return;
+    }
+    const now = Date.now();
+    let infoText = "";
+    if(SCHEDULE_START && SCHEDULE_END){
+      infoText = `Event waktu: ${new Date(SCHEDULE_START).toLocaleString()} → ${new Date(SCHEDULE_END).toLocaleString()}`;
+      try{ document.getElementById("eventScheduleInfo").innerText = infoText; }catch(e){}
+      if(now < SCHEDULE_START){
+        const diff = SCHEDULE_START - now;
+        try{ document.getElementById("eventTimer").innerText = `Mulai dalam: ${formatDuration(diff)}`; }catch(e){}
+      } else if(now >= SCHEDULE_START && now <= SCHEDULE_END){
+        const diff = SCHEDULE_END - now;
+        try{ document.getElementById("eventTimer").innerText = `Berakhir dalam: ${formatDuration(diff)}`; }catch(e){}
+      } else {
+        try{ document.getElementById("eventTimer").innerText = `Event sudah berakhir`; }catch(e){}
+      }
+    } else if(SCHEDULE_START && !SCHEDULE_END){
+      infoText = `Event mulai: ${new Date(SCHEDULE_START).toLocaleString()}`;
+      try{ document.getElementById("eventScheduleInfo").innerText = infoText; }catch(e){}
+      if(now < SCHEDULE_START){
+        try{ document.getElementById("eventTimer").innerText = `Mulai dalam: ${formatDuration(SCHEDULE_START - now)}`; }catch(e){}
+      } else {
+        try{ document.getElementById("eventTimer").innerText = `Event aktif (tidak ada waktu akhir)`; }catch(e){}
+      }
+    } else if(!SCHEDULE_START && SCHEDULE_END){
+      infoText = `Event berakhir: ${new Date(SCHEDULE_END).toLocaleString()}`;
+      try{ document.getElementById("eventScheduleInfo").innerText = infoText; }catch(e){}
+      if(now <= SCHEDULE_END){
+        try{ document.getElementById("eventTimer").innerText = `Berakhir dalam: ${formatDuration(SCHEDULE_END - now)}`; }catch(e){}
+      } else {
+        try{ document.getElementById("eventTimer").innerText = `Event sudah berakhir`; }catch(e){}
+      }
+    }
+  }, 1000);
+}
+
+function formatDuration(ms){
+  if(ms <= 0) return "0 detik";
+  const s = Math.floor(ms/1000);
+  const days = Math.floor(s/(3600*24));
+  const hours = Math.floor((s%(3600*24))/3600);
+  const mins = Math.floor((s%3600)/60);
+  const secs = s%60;
+  let parts = [];
+  if(days) parts.push(days + " hari");
+  if(hours) parts.push(hours + " jam");
+  if(mins) parts.push(mins + " menit");
+  if(secs) parts.push(secs + " detik");
+  return parts.join(" ");
+}
+setInterval(()=>{ if(SCHEDULE_ENABLED) evaluateScheduleAndToggle(); }, 5000);
+startScheduleDisplay();
+
+// ================= SPIN =================
+let rot=0, lock=false;
+document.getElementById("spinBtn").addEventListener("click", ()=>{
+ if(lock) return;
+ if((spinData[deviceId]||0) <= 0) return alert("Spin kamu habis!");
+ const name = document.getElementById("name").value.trim();
+ if(!name) return alert("Isi nama!");
+ if(!lockedName){ lockedName = name; try{ document.getElementById("name").disabled = true; }catch(e){} localStorage.setItem("lockedName", lockedName); }
+ totalSpin++;
+ spinData[deviceId] = (spinData[deviceId]||0) - 1;
+ saveData(); updateInfo();
+
+ db.ref("winners").once("value").then(snapshot=>{
+   const winnersData = snapshot.val() || [];
+   db.ref("deviceWins/"+deviceId).once("value").then(dwSnap=>{
+     const deviceWinsCount = dwSnap.val() || 0;
+     const winPrizes = prizes.map((p,i)=>p.win?i:null).filter(i=>i!==null);
+     const losePrizes = prizes.map((p,i)=>!p.win?i:null).filter(i=>i!==null);
+
+     let forceZonk = false;
+     if(!EVENT_ON) forceZonk = true;
+     if(MAX_WINNER_GLOBAL>0 && winnersData.length >= MAX_WINNER_GLOBAL) forceZonk = true;
+     if(MAX_WIN_PER_DEVICE>0 && deviceWinsCount >= MAX_WIN_PER_DEVICE) forceZonk = true;
+
+     let idx;
+     if(forceZonk || hasWon){
+       idx = weightedPickIndex(losePrizes) || 0;
+     } else {
+       const allIndices = prizes.map((_,i)=>i);
+       idx = weightedPickIndex(allIndices) || Math.floor(Math.random()*prizes.length);
+       if(prizes[idx].win && ((MAX_WINNER_GLOBAL>0 && winnersData.length >= MAX_WINNER_GLOBAL) || (MAX_WIN_PER_DEVICE>0 && deviceWinsCount >= MAX_WIN_PER_DEVICE) || !EVENT_ON)){
+         idx = weightedPickIndex(losePrizes) || idx;
+       }
+     }
+
+     const anglePer = 360/prizes.length;
+     const target = 90 - (idx*anglePer) - anglePer/2;
+     rot += 360*6 + (target - (rot%360));
+     lock = true;
+     canvas.style.transform = `rotate(${rot}deg)`;
+
+     setTimeout(()=> {
+       lock = false;
+       lastPrize = prizes[idx];
+       try{ document.getElementById("result").innerText = `🎉 ${lockedName} mendapatkan ${lastPrize.label}`; document.getElementById("log").innerHTML += `<div>${lockedName} → ${lastPrize.label}</div>`; }catch(e){}
+
+       if(lastPrize.win && !hasWon && EVENT_ON){
+         db.ref("winners").once("value").then(snap2=>{
+           const current = snap2.val()||[];
+           if(MAX_WINNER_GLOBAL===0 || current.length < MAX_WINNER_GLOBAL){
+             db.ref("deviceWins/"+deviceId).once("value").then(dwSnap2=>{
+               const currentDeviceWins = dwSnap2.val() || 0;
+               if(MAX_WIN_PER_DEVICE===0 || currentDeviceWins < MAX_WIN_PER_DEVICE){
+                 hasWon = true;
+                 const timeStamp = new Date().toLocaleString();
+                 current.push({name:lockedName, prize:lastPrize.label, time:timeStamp});
+                 db.ref("winners").set(current);
+                 db.ref("deviceWins/"+deviceId).set(currentDeviceWins+1);
+                 try{ document.getElementById("claimBtn").style.display = "block"; }catch(e){}
+                 const t = encodeURIComponent(`Halo admin XREZZKYSTORE 👋\n\nSaya ${lockedName} menang:\n🎁 ${lastPrize.label}\n🕒 ${timeStamp}`);
+                 window.open(`https://wa.me/${ADMIN_WA}?text=${t}`,"_blank");
+               }
+             });
+           }
+         });
+       }
+
+       if(!lastPrize.win || !hasWon) try{ document.getElementById("claimBtn").style.display = "none"; }catch(e){}
+       saveData(); updateInfo();
+     }, 4200);
+   });
+ });
+});
+
+// ================= REDEEM CODE =================
+document.getElementById("redeemBtn").addEventListener("click", ()=>{
+ const codeInput = document.getElementById("code");
+ const code = (codeInput.value || "").trim().toUpperCase();
+ if(!code) return alert("Masukkan kode!");
+ if(CODES[code]){
+   const key = deviceId+"_"+code;
+   if(!usedCodes[key]){
+     spinData[deviceId] = (spinData[deviceId]||0) + CODES[code];
+     usedCodes[key] = true;
+     saveData();
+     updateInfo();
+     codeInput.value = "";
+     alert(`✅ Code ${code} berhasil! Spin +${CODES[code]}`);
+   } else alert("⚠️ Kode sudah digunakan!");
+ } else alert("⚠️ Kode tidak valid!");
+});
+
+// ================= CLAIM =================
+try{ document.getElementById("claimBtn").addEventListener("click", ()=>{ if(!lastPrize || !lastPrize.win) return; const t = encodeURIComponent(`Halo admin XREZZKYSTORE 👋\n\nSaya ${lockedName} menang:\n🎁 ${lastPrize.label}`); window.open(`https://wa.me/${ADMIN_WA}?text=${t}`,"_blank"); }); }catch(e){}
+
+// ================= ADMIN UI =================
+let tap=0;
+document.getElementById("title").addEventListener("click", ()=>{
+ tap++;
+ if(tap>=5){
+  const pin=prompt("PIN ADMIN:");
+  if(pin===ADMIN_PIN) document.getElementById("adminPanel").style.display="block";
+  tap=0;
+ }
+});
+
+// apply settings
+document.getElementById("applySettingsBtn").addEventListener("click", ()=>{
+ const mwg = parseInt(document.getElementById("maxWinnerGlobal").value) || 0;
+ const mwd = parseInt(document.getElementById("maxWinDevice").value) || 0;
+ const msp = parseInt(document.getElementById("maxSpinDevice").value) || 0;
+ const freeNew = parseInt(document.getElementById("freeSpinNewUser").value);
+ const freeVal = (isNaN(freeNew) ? null : freeNew);
+
+ db.ref("settings/maxWinnerGlobal").set(mwg);
+ db.ref("settings/maxWinPerDevice").set(mwd);
+ db.ref("settings/maxSpinPerUser").set(msp);
+ if(freeVal !== null) db.ref("settings/freeSpinNewUser").set(freeVal);
+
+ alert("Settings disimpan ke Firebase.");
+});
+
+// mode toggles
+document.getElementById("modeRequired").addEventListener("change", ()=>{
+ if(document.getElementById("modeRequired").checked) db.ref("settings/requireParams").set(true);
+});
+document.getElementById("modeTesting").addEventListener("change", ()=>{
+ if(document.getElementById("modeTesting").checked) db.ref("settings/requireParams").set(false);
+});
+
+// Replace main toggle button behavior to enforce single control (other ON/OFF buttons kept in DOM but hidden/display not used)
+document.getElementById("toggleEventBtn").addEventListener("click", ()=>{
+ settingsRef.once("value").then(snap=>{
+   const s = snap.val() || {};
+   const current = !!s.eventOn;
+   if(!current){
+     // Validate required params if necessary (official mode)
+     if(s.eventMode === 'official' || s.requireParams){
+       const info = (document.getElementById("adminInfo").value || "").trim();
+       const mwg = parseInt(document.getElementById("maxWinnerGlobal").value) || 0;
+       const mwd = parseInt(document.getElementById("maxWinDevice").value) || 0;
+       const msp = parseInt(document.getElementById("maxSpinDevice").value) || 0;
+       if(!info || mwg<=0 || mwd<=0 || msp<=0){
+         return alert("Mode Event Resmi aktif: isi semua parameter sebelum menyalakan event.");
+       }
+     }
+     db.ref("settings/eventOn").set(true);
+   } else {
+     db.ref("settings/eventOn").set(false);
+   }
+ });
+});
+
+// update info board
+document.getElementById("updateInfoBtn").addEventListener("click", ()=>{
+ const info = (document.getElementById("adminInfo").value || "").trim();
+ db.ref("infoBoard").set(info);
+ alert("Info event diperbarui!");
+});
+
+// reset all data (special)
+document.getElementById("resetAllDataBtn").addEventListener("click", ()=>{
+ if(!confirm("⚠️ Semua data user, spin, pemenang akan terhapus permanen. Lanjutkan?")) return;
+ const t = Date.now();
+ db.ref("settings").update({ resetAllTimestamp: t, eventOn: false, eventEnd: t }).then(()=>{
+   db.ref("winners").set([]);
+   db.ref("deviceWins").set({});
+   db.ref("codes").set({});
+   localStorage.removeItem("spinData");
+   localStorage.removeItem("usedCodes");
+   localStorage.removeItem("hasWon");
+   localStorage.removeItem("lockedName");
+   localStorage.removeItem("totalSpin");
+   localStorage.setItem("lastResetAll", String(t));
+   alert("Semua data telah direset. Event dimatikan.");
+ }).catch(()=> alert("Gagal mereset data."));
+});
+
+// other resets
+document.getElementById("resetSpinBtn").addEventListener("click", ()=>{ if(confirm("Reset spin semua user lokal (clear localStorage)?")){ localStorage.clear(); location.reload(); }});
+document.getElementById("restartWinnersBtn").addEventListener("click", ()=>{ if(confirm("Reset data pemenang di Firebase?")){ db.ref("winners").set([]); db.ref("deviceWins").set({}); alert("Pemenang di-reset."); }});
+
+// codes management
+document.getElementById("addCodeBtn").addEventListener("click", ()=>{
+ const newCode = (document.getElementById("newCode").value||"").trim().toUpperCase();
+ const spin = parseInt(document.getElementById("newCodeSpin").value) || 0;
+ if(!newCode || spin<=0) return alert("Masukkan kode dan spin valid.");
+ db.ref("codes/"+newCode).set(spin);
+ alert("Kode ditambahkan.");
+ document.getElementById("newCode").value=""; document.getElementById("newCodeSpin").value="";
+});
+document.getElementById("resetCodesBtn").addEventListener("click", ()=>{ if(confirm("Hapus semua kode redeem di Firebase?")){ db.ref("codes").set({}); alert("Semua kode dihapus."); }});
+
+// wheel manager functions
+function renderWheelListUI(items){
+ const container = document.getElementById("wheelList");
+ container.innerHTML = "";
+ items.forEach((it, idx) => {
+   const div = document.createElement("div");
+   div.className = "wheel-item";
+   const input = document.createElement("input");
+   input.className = "label-input";
+   input.value = it.label || "";
+   input.placeholder = "Nama hadiah";
+   input.addEventListener("change", ()=>{
+     wheelItemsRef.once("value").then(snap=>{
+       let arr = snap.val()||[];
+       if(!Array.isArray(arr)) arr=[];
+       arr[idx] = arr[idx]||{};
+       arr[idx].label = input.value || "ZONK";
+       db.ref("wheelItems").set(arr);
+     });
+   });
+   const sel = document.createElement("select");
+   const oWin = document.createElement("option"); oWin.value="win"; oWin.text="HADIAH";
+   const oLose = document.createElement("option"); oLose.value="lose"; oLose.text="ZONK";
+   sel.appendChild(oWin); sel.appendChild(oLose);
+   sel.value = it.win ? "win" : "lose";
+   sel.addEventListener("change", ()=>{
+     wheelItemsRef.once("value").then(snap=>{
+       let arr = snap.val()||[]; if(!Array.isArray(arr)) arr=[];
+       arr[idx] = arr[idx]||{};
+       arr[idx].win = sel.value==="win";
+       const newArr = arr.map(a=>({label:a.label||"ZONK", win:!!a.win, weight: Number(a.weight)||1}));
+       const hasWin = newArr.some(a=>a.win); const hasLose = newArr.some(a=>!a.win);
+       if(!hasWin || !hasLose){ alert("Wheel harus memiliki minimal 1 ZONK dan 1 HADIAH."); sel.value = it.win?"win":"lose"; return; }
+       db.ref("wheelItems").set(newArr);
+     });
+   });
+   const weightInput = document.createElement("input");
+   weightInput.type="number"; weightInput.min="0"; weightInput.className="weight-input";
+   weightInput.value = (typeof it.weight !== "undefined") ? String(Number(it.weight)||1) : "1";
+   weightInput.addEventListener("change", ()=>{
+     let w = parseInt(weightInput.value); if(isNaN(w) || w<0) w=0;
+     wheelItemsRef.once("value").then(snap=>{
+       let arr = snap.val()||[]; if(!Array.isArray(arr)) arr=[];
+       arr[idx] = arr[idx]||{};
+       arr[idx].weight = w;
+       db.ref("wheelItems").set(arr);
+     });
+   });
+   const delBtn = document.createElement("button"); delBtn.innerText="Hapus";
+   delBtn.addEventListener("click", ()=>{
+     if(!confirm("Hapus item wheel ini?")) return;
+     wheelItemsRef.once("value").then(snap=>{
+       let arr = snap.val()||[]; if(!Array.isArray(arr)) arr=[];
+       if(arr.length <= 1){ alert("Tidak bisa menghapus. Wheel minimal 1 item."); return; }
+       const newArr = arr.slice(0,idx).concat(arr.slice(idx+1));
+       const hasWin = newArr.some(a=>a && a.win); const hasLose = newArr.some(a=>a && !a.win);
+       if(!hasWin || !hasLose){ alert("Tidak bisa hapus: akan menghilangkan semua ZONK atau semua HADIAH."); return; }
+       db.ref("wheelItems").set(newArr);
+     });
+   });
+   div.appendChild(input); div.appendChild(sel); div.appendChild(weightInput); div.appendChild(delBtn);
+   container.appendChild(div);
+ });
+ if(!items || items.length===0) container.innerHTML = "<i>Tidak ada item wheel</i>";
+}
+document.getElementById("addWheelItemBtn").addEventListener("click", ()=>{
+ const label = (document.getElementById("newWheelLabel").value||"").trim();
+ const type = document.getElementById("newWheelType").value;
+ let weight = parseInt(document.getElementById("newWheelWeight").value);
+ if(isNaN(weight) || weight < 0) weight = 1;
+ if(!label) return alert("Masukkan nama hadiah");
+ wheelItemsRef.once("value").then(snap=>{
+   let arr = snap.val()||[]; if(!Array.isArray(arr)) arr=[];
+   arr.push({label: label, win: (type==="win"), weight: weight});
+   db.ref("wheelItems").set(arr);
+   document.getElementById("newWheelLabel").value=""; document.getElementById("newWheelWeight").value="1";
+ });
+});
+
+// ================= SCHEDULE UI ACTIONS =================
+document.getElementById("setScheduleBtn").addEventListener("click", ()=>{
+ const startVal = document.getElementById("eventStart").value;
+ const endVal = document.getElementById("eventEnd").value;
+ const enable = document.getElementById("enableSchedule").checked;
+
+ if(enable && !startVal && !endVal){
+   return alert("Masukkan minimal tanggal mulai atau tanggal berakhir untuk schedule.");
+ }
+
+ if(!enable){
+   if(!confirm("Anda menonaktifkan schedule. Lanjutkan?")) return;
+ }
+
+ if(enable && startVal){
+   const s = new Date(startVal);
+   if(isNaN(s)) return alert("Start datetime tidak valid");
+   SCHEDULE_START = s.valueOf();
+ } else SCHEDULE_START = 0;
+ if(enable && endVal){
+   const e = new Date(endVal);
+   if(isNaN(e)) return alert("End datetime tidak valid");
+   SCHEDULE_END = e.valueOf();
+ } else SCHEDULE_END = 0;
+
+ SCHEDULE_ENABLED = !!enable;
+ db.ref("settings/scheduleEnabled").set(SCHEDULE_ENABLED);
+ db.ref("settings/eventStart").set(SCHEDULE_START);
+ db.ref("settings/eventEnd").set(SCHEDULE_END);
+
+ // If enabled and current time inside, try to auto-enable event (respecting required params)
+ if(SCHEDULE_ENABLED && SCHEDULE_START && SCHEDULE_END){
+   const now = Date.now();
+   if(now >= SCHEDULE_START && now <= SCHEDULE_END){
+     // If required mode, validate before auto enabling
+     settingsRef.once("value").then(snap=>{
+       const s = snap.val() || {};
+       const require = !!s.requireParams;
+       if(require && !canEnableEvent()){
+         alert("Schedule disimpan. Namun event tidak bisa otomatis ON karena parameter wajib belum diisi.");
+         db.ref("settings/eventOn").set(false);
+       } else {
+         db.ref("settings/eventOn").set(true);
+         alert("Schedule disimpan. Event otomatis dinyalakan sesuai schedule (sekarang masuk jangka waktu).");
+       }
+     });
+   } else {
+     // outside scheduled window: ensure event is OFF until start
+     db.ref("settings/eventOn").set(false);
+     alert("Schedule disimpan. Event akan otomatis ON saat waktunya tiba.");
+   }
+ } else {
+   alert("Schedule disimpan.");
+ }
+
+ // start display & evaluate immediately
+ startScheduleDisplay();
+ evaluateScheduleAndToggle();
+});
+
+document.getElementById("clearScheduleBtn").addEventListener("click", ()=>{
+ if(!confirm("Hapus schedule event?")) return;
+ SCHEDULE_ENABLED=false; SCHEDULE_START=0; SCHEDULE_END=0;
+ db.ref("settings/scheduleEnabled").set(false);
+ db.ref("settings/eventStart").set(0);
+ db.ref("settings/eventEnd").set(0);
+ document.getElementById("eventStart").value="";
+ document.getElementById("eventEnd").value="";
+ startScheduleDisplay();
+ alert("Schedule dihapus.");
+});
+
+// ================= PUBLIC LINK ACTIONS =================
+document.getElementById("setPublicUrlBtn").addEventListener("click", ()=>{
+ const u = (document.getElementById("publicUrl").value || "").trim();
+ db.ref("settings/publicUrl").set(u);
+ alert("Public URL disimpan.");
+});
+document.getElementById("openPublicBtn").addEventListener("click", ()=>{
+ db.ref("settings/publicUrl").once("value").then(snap=>{
+   const url = (snap.val()||"").trim();
+   const openUrl = url || (window.location.origin + window.location.pathname + '?public=1');
+   window.open(openUrl, "_blank");
+ });
+});
+document.getElementById("copyPublicBtn").addEventListener("click", ()=>{
+ db.ref("settings/publicUrl").once("value").then(snap=>{
+   let url = (snap.val()||"").trim();
+   if(!url) url = window.location.origin + window.location.pathname + '?public=1';
+   if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(()=> alert("Link publik disalin.")); }
+   else { try{ const ta=document.createElement('textarea'); ta.value=url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); alert("Link publik disalin (fallback)."); }catch(e){ alert("Gagal salin link: "+url); } }
+ });
+});
+
+// ================= EXPORT / COPY =================
+document.getElementById("exportBtn").addEventListener("click", ()=>{
+ db.ref("winners").once("value").then(snapshot=>{
+   const data = snapshot.val()||[];
+   if(!data || data.length===0){ document.getElementById("exportArea").value = "Belum ada pemenang."; }
+   else {
+     let t = "DAFTAR PEMENANG:\n\n";
+     data.forEach((w,i)=> t += `${i+1}. ${w.name} - ${w.prize} - ${w.time}\n`);
+     document.getElementById("exportArea").value = t;
+   }
+   document.getElementById("exportModal").style.display = "flex";
+   document.getElementById("exportStatus").innerText = `Jumlah pemenang: ${ (data && data.length) || 0 }`;
+ });
+});
+document.getElementById("copyExportBtn").addEventListener("click", ()=>{
+ const text = document.getElementById("exportArea").value || "";
+ if(!text) return alert("Tidak ada yang disalin.");
+ if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(()=> alert("Teks pemenang disalin.")); }
+ else { const ta=document.getElementById("exportArea"); ta.select(); try{ document.execCommand('copy'); alert("Teks pemenang disalin (fallback)."); }catch(e){ alert("Gagal salin. Salin manual."); } }
+});
+document.getElementById("closeExportBtn").addEventListener("click", ()=>{ document.getElementById("exportModal").style.display = "none"; });
+
+// ================= REALTIME WINNERS & INFO =================
+db.ref("infoBoard").on("value", snap => {
+ const info = snap.val()||"Belum ada info event";
+ try{ document.getElementById("infoBoard").innerHTML = "<b>INFO EVENT:</b><br>"+info; }catch(e){}
+ // pastikan admin textarea selalu sinkron realtime
+ try{ document.getElementById("adminInfo").value = info; }catch(e){}
+});
+db.ref("winners").on("value", snap => {
+ const winners = snap.val()||[];
+ try{
+ if(!winners || winners.length===0) document.getElementById("globalWinners").innerHTML = "<b>Pemenang:</b><br>Belum ada pemenang";
+ else {
+   let html = "<b>Pemenang:</b><br>";
+   winners.forEach((w,i)=> html += `${i+1}. ${w.name} - ${w.prize} (${w.time})<br>`);
+   document.getElementById("globalWinners").innerHTML = html;
+ }
+ }catch(e){}
+ if(MAX_WINNER_GLOBAL>0 && winners.length >= MAX_WINNER_GLOBAL){
+   try{ document.getElementById("winnersStatus").innerText = "⚠️ Pemenang telah tercapai. Event tidak menerima pemenang baru, peserta masih dapat spin namun hasil akan ZONK."; }catch(e){}
+ } else try{ document.getElementById("winnersStatus").innerText = ""; }catch(e){}
+ try{ document.getElementById("exportStatus").innerText = `Jumlah pemenang sekarang: ${winners.length}`; }catch(e){}
+});
+updateInfo();
+</script>
+
+<!-- Add-on script (lightweight, non-destructive) -->
+<script>
+(function(){
+  if(typeof db === "undefined") return;
+  const settingsRef = db.ref("settings");
+  const winnersRef = db.ref("winners");
+
+  try{ document.getElementById("eventOnBtn").style.display = 'none'; }catch(e){}
+  try{ document.getElementById("eventOffBtn").style.display = 'none'; }catch(e){}
+
+  function setIndicator(isOn, note){
+    const ind = document.getElementById("eventIndicator");
+    note = note ? (" — " + note) : "";
+    if(ind){
+      if(isOn){ ind.innerText = "EVENT: ON" + note; ind.style.background="#16a34a"; ind.style.color="#000"; }
+      else { ind.innerText = "EVENT: OFF" + note; ind.style.background="#ef4444"; ind.style.color="#fff"; }
+    }
+    const pubStatus = document.getElementById("publicStatus");
+    if(pubStatus){
+      pubStatus.innerHTML = `<b>Status:</b> <span style="padding:4px 8px;border-radius:6px;background:${isOn? '#16a34a':'#ef4444'};color:${isOn? '#000':'#fff'}">${isOn? 'ON':'OFF'}</span>`;
+    }
+  }
+
+  const oldToggle = document.getElementById("toggleEventBtn");
+  if(oldToggle){
+    const newToggle = oldToggle.cloneNode(true);
+    oldToggle.parentNode.replaceChild(newToggle, oldToggle);
+    newToggle.addEventListener("click", ()=>{
+      settingsRef.once("value").then(snap=>{
+        const s = snap.val()||{};
+        const cur = !!s.eventOn;
+        if(!cur){
+          const require = !!s.requireParams;
+          if(require){
+            const info = (document.getElementById("adminInfo").value || "").trim();
+            const mwg = parseInt(document.getElementById("maxWinnerGlobal").value) || 0;
+            const mwd = parseInt(document.getElementById("maxWinDevice").value) || 0;
+            const msp = parseInt(document.getElementById("maxSpinDevice").value) || 0;
+            if(!info || mwg<=0 || mwd<=0 || msp<=0){
+              return alert("Mode Wajib aktif: isi semua parameter sebelum menyalakan event.");
+            }
+          }
+          settingsRef.child('eventOn').set(true);
+        } else {
+          settingsRef.child('eventOn').set(false);
+        }
+      }).catch(()=>{});
+    });
+  }
+
+  try{
+    const pubSpin = document.getElementById("publicSpinBtn");
+    if(pubSpin) pubSpin.addEventListener("click", ()=>{ const name = document.getElementById("name").value.trim(); if(!name) return alert("Isi nama sebelum spin (publik)."); document.getElementById("spinBtn").click(); });
+  }catch(e){}
+
+  const params = new URLSearchParams(window.location.search);
+  const IS_PUBLIC = params.get('public') === '1';
+  function showPublicPanel(){
+    const p = document.getElementById("publicPanel");
+    if(!p) return;
+    p.style.display = 'block';
+    p.setAttribute('aria-hidden','false');
+    const adm = document.getElementById("adminPanel");
+    if(adm) adm.style.display = 'none';
+    try{ document.getElementById("title").onclick = ()=>{}; }catch(e){}
+  }
+  if(IS_PUBLIC) showPublicPanel();
+
+  settingsRef.on("value", snap=>{
+    const s = snap.val() || {};
+    const on = !!s.eventOn;
+    setIndicator(on);
+    PUBLIC_URL = s.publicUrl || "";
+    if(IS_PUBLIC) showPublicPanel();
+    else if(PUBLIC_URL && window.location.href.indexOf(PUBLIC_URL) !== -1) showPublicPanel();
+    const pubSchedule = document.getElementById("publicSchedule");
+    if(pubSchedule){
+      const start = Number(s.eventStart) || 0;
+      const end = Number(s.eventEnd) || 0;
+      if(start && end) pubSchedule.innerText = `Event waktu: ${new Date(start).toLocaleString()} → ${new Date(end).toLocaleString()}`;
+      else if(start) pubSchedule.innerText = `Event mulai: ${new Date(start).toLocaleString()}`;
+      else if(end) pubSchedule.innerText = `Event berakhir: ${new Date(end).toLocaleString()}`;
+      else pubSchedule.innerText = "Waktu event: belum diset";
+    }
+
+    // Jika admin melakukan resetAllTimestamp, bersihkan juga area jadwal di publik dan di atas wheel
+    if(typeof s.resetAllTimestamp !== "undefined"){
+      const t = Number(s.resetAllTimestamp)||0;
+      const lastLocal = parseInt(localStorage.getItem("lastResetAll")||"0",10) || 0;
+      if(t > lastLocal){
+        try{
+          const esi = document.getElementById("eventScheduleInfo"); if(esi) esi.innerText = "";
+          const et = document.getElementById("eventTimer"); if(et) et.innerText = "";
+          const pubSch = document.getElementById("publicSchedule"); if(pubSch) pubSch.innerText = "";
+          localStorage.setItem("lastResetAll", String(t));
+        }catch(e){}
+      }
+    }
+  });
+
+  winnersRef.on("value", snap=>{
+    const v = snap.val() || [];
+    const items = Array.isArray(v) ? v.filter(Boolean) : Object.values(v || {});
+    const count = items.length;
+    const pubList = document.getElementById("publicWinnersList");
+    if(pubList){
+      pubList.innerHTML = "";
+      if(items.length === 0) pubList.innerText = "Belum ada pemenang";
+      else items.slice(0,30).forEach((w,i)=>{
+        const d = document.createElement("div");
+        d.style.padding="3px 0";
+        d.style.fontSize="13px";
+        d.innerText = `${i+1}. ${w.name} - ${w.prize} (${w.time||''})`;
+        pubList.appendChild(d);
+      });
+    }
+    let lastTs = 0;
+    items.forEach(it=>{
+      if(it && it.time){
+        const t = new Date(it.time).getTime();
+        if(!isNaN(t)) lastTs = Math.max(lastTs, t);
+      }
+    });
+    if(lastTs){
+      const formatted = new Date(lastTs).toLocaleString();
+      const el = document.getElementById("eventScheduleInfo");
+      if(el) el.innerText = `Pemenang terakhir: ${formatted}`;
+      const plw = document.getElementById("publicLastWinner");
+      if(plw) plw.innerText = `Pemenang terakhir: ${formatted}`;
+    } else {
+      const plw = document.getElementById("publicLastWinner");
+      if(plw) plw.innerText = `Pemenang terakhir: -`;
+    }
+    const full = (MAX_WINNER_GLOBAL > 0 && count >= MAX_WINNER_GLOBAL);
+    if(full){
+      try{ document.getElementById("claimBtn").style.display = "none"; }catch(e){}
+      settingsRef.once('value').then(snapSettings=>{
+        const s = snapSettings.val() || {};
+        const now = lastTs || Date.now();
+        const need = (!!s.eventOn) || !(s.eventEnd) || Number(s.eventEnd) < now-1000;
+        if(need) db.ref("settings").update({ eventOn: false, eventEnd: now }).catch(()=>{});
+      }).catch(()=>{});
+      setIndicator(false, "Pemenang penuh");
+      const pubSchedule = document.getElementById("publicSchedule");
+      if(pubSchedule) pubSchedule.innerText = `Event selesai: pemenang penuh (${new Date((lastTs||Date.now())).toLocaleString()})`;
+    } else {
+      try{ document.getElementById("winnersStatus").innerText = ""; }catch(e){}
+    }
+  });
+
+})();
+</script>
 </body>
-</html>
+    </html>
