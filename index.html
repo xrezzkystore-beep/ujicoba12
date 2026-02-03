@@ -1179,6 +1179,7 @@ updateInfo();
 
   // Enhanced Schedule / Auto ON-OFF logic + UI coloring + reset handling + winner modal + admin winner manager
   let enhancedInterval = null;
+  let scheduleDisplayStarted = false;
   let localLastReset = parseInt(localStorage.getItem('lastResetAll')||'0',10) || 0;
 
   function msParts(ms){
@@ -1205,9 +1206,11 @@ updateInfo();
     else { el.style.background = ''; el.style.color=''; el.style.padding=''; el.style.borderRadius=''; }
   }
 
-  function startEnhancedScheduleLoop(){
-    if(enhancedInterval) clearInterval(enhancedInterval);
-    enhancedInterval = setInterval(()=>{
+  function startScheduleDisplay(){
+  if(scheduleDisplayStarted) return; // ⬅️ STOP kalau sudah jalan
+  scheduleDisplayStarted = true;
+
+  if(scheduleTimerInterval) clearInterval(scheduleTimerInterval);
       // read schedule values directly from Firebase (to ensure we use authoritative state)
       settingsRefLocal.once('value').then(snap=>{
         const s = snap.val() || {};
