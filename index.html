@@ -1307,14 +1307,7 @@ updateInfo();
       // Immediately end event due to winners full
       settingsRefLocal.update({ eventOn:false, endedDueToFull:true }).catch(()=>{});
       // Update timer UI
-      try{
-        const timerEl = document.getElementById('eventTimer');
-        if(timerEl) { timerEl.innerText = '❌ Event berakhir (pemenang tercapai)'; setTimerColor(timerEl,'gray'); }
-        const status = document.getElementById('winnersStatus');
-        if(status) status.innerText = '⚠️ Event telah berakhir: pemenang penuh';
-        // Ensure claim disabled for public
-        try{ document.getElementById('claimBtn').style.display = 'none'; }catch(e){}
-      }catch(e){}
+      
     }
     // Re-render clickable winners list (so modal can open)
     renderClickableWinners(winners);
